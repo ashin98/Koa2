@@ -1,20 +1,32 @@
-//连接数据库-------需要安装sequelize
-const {Sequeize} = require('sequelize')
-const {MYSQL_HOST,
-    MYSQL_PORT,
-    MYSQL_USER,
-    MYSQL_PWD,
-    MYSQL_DB} = require('../config/config.default')
+//连接mongodb数据库
 
-const seq = new Sequeize('MYSQL_DB','MYSQL_USER','MYSQL_PWD',{     //前三个参数分别是数据库名，用户名，密码
-    host:'MYSQL_HOST',
-    dialect:'mysql'
-})
+//启动MongoDb数据库----在bin目录中打开cmd执行----  1.mongod -dbpath D:\MongoDB\data\db
+//  2. 另外开启一个cmd，也是bin目录下的，执行----  2.mongo
 
-seq.authenticate().then(()=>{
-    console.log('数据库连接成功')
-}).catch((err)=>{
-    console.log('数据库连接失败',err)
-})
+const {MongodbURL,koa} = require('../config/config.default')
+const mongoose = require('mongoose')
+module.exports = ()=>{
+    mongoose.connect(MongodbURL,{useUnifiedTopology:true,useNewUrlParser:true})
+    .then(()=>{
+        console.log('数据库连接成功')
+    }).catch((err)=>{
+        console.log('数据库连接失败',err)
+    })
+}
 
-module.exports = req
+// const MongoClient = require('mongodb').MongoClient
+// const dbURL = MongodbURL
+// const dbName = koa
+// MongoClient.connect(dbURL,(err,client)=>{
+//     if(err){
+//         console.log(err)
+//             return ;
+//     }
+//     const db = client.db(dbName)
+//     //增加数据
+//     db.collection('users').insertOne({"username":'张三',"age":33},function(err,res){
+//         if(!err){
+//             console.log('增加数据成功')
+//         }
+//     })
+// })

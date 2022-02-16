@@ -2,7 +2,7 @@
 const Koa = require('koa')
 const koaBody = require('koa-body') //处理post请求参数的中间件  npm i koa-body
 
-const userRouter = require('../users/user')  //引入user模块的路由
+const userRouter = require('../routers/user')  //引入user模块的路由
 
 const app = new Koa()
 
