@@ -3,7 +3,7 @@
 const {User} = require('../models/user')  //引入数据库模型
 class userController {
     //添加系统用户
-    async register(ctx,next){
+    async add(ctx,next){
         //1.获取客户端输入数据 
         const {username='',password=''} = ctx.request.body
         
