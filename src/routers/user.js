@@ -3,19 +3,15 @@ const Router = require('koa-router')
 const router = new Router({prefix:'/users'})  
 const {add,update,del,find,findmes} = require('../methods/curd')
 const {userValidator,verifyUser,cryptPassword,verifylogin} = require('../middleware/user.middleware')
-const {register,login} = require('../methods/users.controller')
+const {register,login,changePassword} = require('../methods/users.controller')
 const {auth} = require('../middleware/auth.middleware')
 
+//注册
 router.post('/register',userValidator,verifyUser,cryptPassword,register)
-
+//登录
 router.post('/login',userValidator,verifylogin,login)
-
-router.patch('/',auth,(ctx,next)=>{
-    ctx.body = {
-        code:200,
-        message:'修改密码成功'
-    }
-})
+//修改密码
+router.patch('/',auth,cryptPassword,changePassword)
 
 //POST  /users/add
 router.post('/add',add)

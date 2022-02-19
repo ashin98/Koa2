@@ -3,7 +3,7 @@
 
 const jwt = require('jsonwebtoken')
 const {User} = require('../models/user')
-const {createUser, getUserInfo} = require('../service/user.service')
+const {createUser, getUserInfo,updatePasswood} = require('../service/user.service')
 class UserApi {
     async register(ctx,next){
         const {username,password} = ctx.request.body
@@ -47,6 +47,27 @@ class UserApi {
             console.error('用户登录失败',err)
         }
         
+    }
+
+    async changePassword(ctx,next){
+        //1.获取数据
+        const id =ctx.state.user._doc._id
+        const {password} = ctx.request.body
+        //console.log(id,password)
+        //2.操作数据库
+       if(await updatePasswood({id,password})) {
+           ctx.body = {
+               code:200,
+               message:'修改密码成功',
+               result:''
+           }
+       }else{
+        ctx.body = {
+            code:400,
+            message:'修改密码失败'
+        }
+       }
+       
     }
 }
 module.exports = new UserApi()

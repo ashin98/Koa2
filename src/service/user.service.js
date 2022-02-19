@@ -18,6 +18,20 @@ class userService {
         return res
     }
 
+    //修改密码或者用户名等
+    async updatePasswood({id,username,password}){
+        const newUser = {}
+        //username && Object.assign(newUser,{username})
+        password && Object.assign(newUser,{password})
+        // console.log({id})
+        // console.log(password)
+        // console.log(newUser.password)
+        const res = await User.updateOne({_id:id},{password:newUser.password})
+        //const res = await User.findOne({_id:id})
+        //console.log(res)
+        return res.acknowledged
+    }
+
     
 }
 

@@ -6,7 +6,6 @@ const auth = async (ctx,next)=>{
     const token = authorization.replace('Bearer ','') //Bearer后面的空格别忘了
     try {
         //user中包含了payload信息（id,username）
-        console.log(111)
         const user = jwt.verify(token,"ashin")
         ctx.state.user = user
     } catch (err) {
