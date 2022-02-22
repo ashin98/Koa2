@@ -40,7 +40,7 @@ class UserApi {
             code:200,
             result:`登录成功`,
             result:{
-                token:jwt.sign(res,"ashin",{expiresIn:'1h'}) //第一个参数是payload载荷(id,username)，第二个参数是私钥，第三个参数是过期时间
+                token:jwt.sign(res,"ashin",{expiresIn:'5h'}) //第一个参数是payload载荷(id,username)，第二个参数是私钥，第三个参数是过期时间
             }
         }
         } catch (err) {
