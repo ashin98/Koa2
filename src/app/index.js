@@ -19,8 +19,9 @@ app.use(koaBody({
     multipart:true,  //是否支持 multipart-formdate 的表单
     formidable:{
         uploadDir:path.join(__dirname,'../upload'), //不能直接使用相对路径，因为它相对的是不是当前文件而是process.cwd()
-        keepExtensions:true   //保留原来的后缀名
-    }
+        keepExtensions:true,   //保留原来的后缀名
+    },
+    parsedMethods:['POST','PUT','PATCH','DELETE'] //默认'POST','PUT','PATCH'请求时参数会携带到ctx.request.body中,其他请求的话需要在这里配置
 
 }))  
 

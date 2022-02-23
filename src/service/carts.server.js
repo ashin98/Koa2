@@ -28,6 +28,39 @@ class cartsServer {
            list:rows
        }
     }
+
+    //更新购物车number和selected
+    async updateCarts(params){
+        const {number,selected} = params
+        const id = params.id.id
+        const res = await Carts.find({_id:id})
+        if(!res) return ''
+        if(number!==undefined){
+            await Carts.updateOne({_id:id},{number:number})
+        }
+        selected!==undefined?await Carts.updateOne({_id:id},{selected:selected}):''
+        const reslut = await Carts.find({_id:id})
+        return reslut
+         
+    }
+
+    //删除购物车
+    async removeCarts(ids){
+       const res = await Carts.remove({_id:{$in:ids}})
+       return res.deletedCount
+    }
+
+    //全选
+    async selectAllCarts(user_id){
+       const res = await Carts.updateMany({user_id:user_id},{selected:true})
+       return res.matchedCount
+    }
+
+    //全不选
+    async unSelectAllCarts(user_id){
+        const res = await Carts.updateMany({user_id},{selected:false})
+        return res.matchedCount
+    }
 }
 
 module.exports = new cartsServer()
