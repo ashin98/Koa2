@@ -20,7 +20,10 @@ class cartsServer {
     async findCarts(pageNum,pageSize){
        const total = await Carts.find().count()
        const offset = (pageNum-1)*parseInt(pageSize)
-       const rows = await Carts.find({},{id:1,number:1,selected:1}).populate('goods_id',{id:1,goods_name:1,goods_price:1,goods_img:1}).skip(offset).limit(parseInt(pageSize))
+       //find的第二个参数必须是对象类型,返回指定的键值对,0表示不返回，1表示返回； populate():查找连表；skip()跳过多少条查找；limit()查找多少条
+       const rows = await Carts.find({},{id:1,number:1,selected:1})
+                    .populate('goods_id',{id:1,goods_name:1,goods_price:1,goods_img:1})
+                    .skip(offset).limit(parseInt(pageSize))
        return {
            total,
            pageNum,
